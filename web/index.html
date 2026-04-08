@@ -24,16 +24,23 @@
         <div id="year-summary" class="year-summary"></div>
 
         <section class="panel filter-panel">
+          <div class="subtle">Stay start date</div>
           <div class="filter-grid">
             <label class="field">
-              <span>Start</span>
+              <span>From</span>
               <input id="filter-start" type="date">
             </label>
             <label class="field">
-              <span>End</span>
+              <span>To</span>
               <input id="filter-end" type="date">
             </label>
           </div>
+          <label class="field">
+            <span>Filters</span>
+            <input id="filter-query" type="text" autocomplete="off" spellcheck="false" placeholder="gender: Female">
+          </label>
+          <div id="filter-suggestions" class="filter-suggestions"></div>
+          <div id="filter-pills" class="filter-pills"></div>
         </section>
 
         <section class="panel">

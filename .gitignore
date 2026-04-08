@@ -3,11 +3,16 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Virtual environments
 .venv/
 venv/
 env/
+.env
+.env.*
 
 # Editors / OS
 .DS_Store
@@ -21,6 +26,7 @@ Thumbs.db
 *.xlsx
 *.xls
 !data/facility_coordinates.parquet
+!data/reference_lookups.json
 
 # Logs / temp files
 *.log

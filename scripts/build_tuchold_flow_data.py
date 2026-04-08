@@ -11,49 +11,12 @@ import pandas as pd
 
 DEFAULT_SOURCE = Path("detention-stays_filtered_20260407_075932.parquet")
 DEFAULT_FACILITY_SOURCE = Path("data/facility_coordinates.parquet")
+DEFAULT_REFERENCE_SOURCE = Path("data/reference_lookups.json")
 DEFAULT_OUTPUT_JSON = Path("web/data/tuchold_flow_data.json")
 DEFAULT_OUTPUT_JS = Path("web/data/tuchold_flow_data.js")
 DEFAULT_YEARS = [2025, 2026]
 DEFAULT_FIRST_FACILITY_CODE = "TUCHOLD"
 REQUIRED_FACILITY_COLUMNS = {"facility_code", "name", "short_label", "city", "state", "lat", "lon"}
-
-
-COUNTRY_NODES: dict[str, dict[str, Any]] = {
-    "AUSTRALIA": {"short_label": "Australia", "lat": -35.2809, "lon": 149.1300},
-    "BOLIVIA": {"short_label": "Bolivia", "lat": -16.4897, "lon": -68.1193},
-    "BRAZIL": {"short_label": "Brazil", "lat": -15.7939, "lon": -47.8828},
-    "CHILE": {"short_label": "Chile", "lat": -33.4489, "lon": -70.6693},
-    "CHINA, PEOPLES REPUBLIC OF": {"short_label": "China", "lat": 39.9042, "lon": 116.4074},
-    "COLOMBIA": {"short_label": "Colombia", "lat": 4.7110, "lon": -74.0721},
-    "COSTA RICA": {"short_label": "Costa Rica", "lat": 9.9281, "lon": -84.0907},
-    "DOMINICAN REPUBLIC": {"short_label": "Dominican Rep.", "lat": 18.4861, "lon": -69.9312},
-    "ECUADOR": {"short_label": "Ecuador", "lat": -0.1807, "lon": -78.4678},
-    "EL SALVADOR": {"short_label": "El Salvador", "lat": 13.6929, "lon": -89.2182},
-    "GERMANY": {"short_label": "Germany", "lat": 52.5200, "lon": 13.4050},
-    "GUATEMALA": {"short_label": "Guatemala", "lat": 14.6349, "lon": -90.5069},
-    "HONDURAS": {"short_label": "Honduras", "lat": 14.0723, "lon": -87.1921},
-    "IRAQ": {"short_label": "Iraq", "lat": 33.3152, "lon": 44.3661},
-    "ITALY": {"short_label": "Italy", "lat": 41.9028, "lon": 12.4964},
-    "JAMAICA": {"short_label": "Jamaica", "lat": 18.0179, "lon": -76.8099},
-    "JORDAN": {"short_label": "Jordan", "lat": 31.9539, "lon": 35.9106},
-    "KENYA": {"short_label": "Kenya", "lat": -1.2921, "lon": 36.8219},
-    "LAOS": {"short_label": "Laos", "lat": 17.9757, "lon": 102.6331},
-    "LIBERIA": {"short_label": "Liberia", "lat": 6.3004, "lon": -10.7969},
-    "MALI": {"short_label": "Mali", "lat": 12.6392, "lon": -8.0029},
-    "MEXICO": {"short_label": "Mexico", "lat": 19.4326, "lon": -99.1332},
-    "MICRONESIA, FEDERATED STATES OF": {"short_label": "Micronesia", "lat": 6.9248, "lon": 158.1610},
-    "NICARAGUA": {"short_label": "Nicaragua", "lat": 12.1140, "lon": -86.2362},
-    "PERU": {"short_label": "Peru", "lat": -12.0464, "lon": -77.0428},
-    "ROMANIA": {"short_label": "Romania", "lat": 44.4268, "lon": 26.1025},
-    "RWANDA": {"short_label": "Rwanda", "lat": -1.9441, "lon": 30.0619},
-    "SAUDI ARABIA": {"short_label": "Saudi Arabia", "lat": 24.7136, "lon": 46.6753},
-    "SPAIN": {"short_label": "Spain", "lat": 40.4168, "lon": -3.7038},
-    "TURKIYE": {"short_label": "Turkiye", "lat": 39.9334, "lon": 32.8597},
-    "UNITED KINGDOM": {"short_label": "United Kingdom", "lat": 51.5074, "lon": -0.1278},
-    "UZBEKISTAN": {"short_label": "Uzbekistan", "lat": 41.2995, "lon": 69.2401},
-    "VENEZUELA": {"short_label": "Venezuela", "lat": 10.4806, "lon": -66.9036},
-    "VIETNAM": {"short_label": "Vietnam", "lat": 21.0285, "lon": 105.8542},
-}
 
 
 def compact_text(value: Any) -> str | None:
@@ -94,6 +57,59 @@ def sentence_total_days(days: Any, months: Any, years: Any) -> float | None:
     return round((day_value or 0.0) + (month_value or 0.0) * 30.4375 + (year_value or 0.0) * 365.25, 2)
 
 
+def integer_value(value: Any) -> int | None:
+    if value is None or pd.isna(value):
+        return None
+    return int(value)
+
+
+def birth_region(value: Any, birth_region_by_country: dict[str, str]) -> str | None:
+    country = normalize_code(value)
+    if not country:
+        return None
+    return birth_region_by_country.get(country, "Other")
+
+
+def load_reference_lookups(source_path: Path) -> tuple[dict[str, dict[str, Any]], dict[str, str]]:
+    data = json.loads(source_path.read_text(encoding="utf-8"))
+    country_nodes_raw = data.get("country_nodes", {})
+    birth_regions_raw = data.get("birth_regions", {})
+    if not isinstance(country_nodes_raw, dict) or not isinstance(birth_regions_raw, dict):
+        raise ValueError("Reference lookup JSON must include object-valued 'country_nodes' and 'birth_regions'.")
+
+    country_nodes: dict[str, dict[str, Any]] = {}
+    for code, meta in country_nodes_raw.items():
+        normalized_code = normalize_code(code)
+        if not normalized_code:
+            continue
+        if not isinstance(meta, dict):
+            raise ValueError(f"Country node for {code!r} must be an object.")
+        short_label = compact_text(meta.get("short_label"))
+        lat = meta.get("lat")
+        lon = meta.get("lon")
+        if short_label is None or lat is None or lon is None:
+            raise ValueError(f"Country node for {normalized_code} is missing 'short_label', 'lat', or 'lon'.")
+        country_nodes[normalized_code] = {
+            "short_label": short_label,
+            "lat": float(lat),
+            "lon": float(lon),
+        }
+
+    birth_region_by_country: dict[str, str] = {}
+    for region, countries in birth_regions_raw.items():
+        region_label = compact_text(region)
+        if region_label is None:
+            continue
+        if not isinstance(countries, list):
+            raise ValueError(f"Birth region {region!r} must map to a list of country codes.")
+        for country in countries:
+            normalized_country = normalize_code(country)
+            if normalized_country is not None:
+                birth_region_by_country[normalized_country] = region_label
+
+    return country_nodes, birth_region_by_country
+
+
 def load_facility_nodes(source_path: Path) -> dict[str, dict[str, Any]]:
     df = pd.read_parquet(source_path)
     missing_columns = sorted(REQUIRED_FACILITY_COLUMNS.difference(df.columns))
@@ -130,9 +146,10 @@ def build_nodes(
     facility_codes: set[str],
     country_codes: set[str],
     facility_nodes: dict[str, dict[str, Any]],
+    country_nodes: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
     missing_facilities = sorted(code for code in facility_codes if code not in facility_nodes)
-    missing_countries = sorted(code for code in country_codes if code not in COUNTRY_NODES)
+    missing_countries = sorted(code for code in country_codes if code not in country_nodes)
     if missing_facilities or missing_countries:
         parts = []
         if missing_facilities:
@@ -160,7 +177,7 @@ def build_nodes(
             }
         )
     for code in sorted(country_codes):
-        meta = COUNTRY_NODES[code]
+        meta = country_nodes[code]
         nodes.append(
             {
                 "id": f"COUNTRY:{code}",
@@ -176,8 +193,15 @@ def build_nodes(
     return nodes
 
 
-def build_payload(source_path: Path, facility_source_path: Path, years: list[int], first_facility_code: str) -> dict[str, Any]:
+def build_payload(
+    source_path: Path,
+    facility_source_path: Path,
+    reference_source_path: Path,
+    years: list[int],
+    first_facility_code: str,
+) -> dict[str, Any]:
     facility_nodes = load_facility_nodes(facility_source_path)
+    country_nodes, birth_region_by_country = load_reference_lookups(reference_source_path)
     columns = [
         "stay_ID",
         "detention_facility_codes_all",
@@ -194,6 +218,12 @@ def build_payload(source_path: Path, facility_source_path: Path, years: list[int
         "detention_facility_code_first",
         "book_in_date_time_first",
         "book_out_date_time_first",
+        "gender",
+        "birth_year",
+        "race",
+        "ethnicity",
+        "birth_country",
+        "felon",
     ]
     df = pd.read_parquet(source_path, columns=columns)
     mask = df["stay_book_in_date_time"].dt.year.isin(years) & df["detention_facility_code_first"].fillna("").str.upper().eq(first_facility_code)
@@ -224,6 +254,13 @@ def build_payload(source_path: Path, facility_source_path: Path, years: list[int
                 "mscCharge": compact_text(row.msc_charge),
                 "releaseReason": compact_text(row.detention_release_reason) or compact_text(row.stay_release_reason),
                 "sentenceDays": sentence_total_days(row.msc_sentence_days, row.msc_sentence_months, row.msc_sentence_years),
+                "gender": compact_text(row.gender),
+                "birthYear": integer_value(row.birth_year),
+                "race": compact_text(row.race),
+                "ethnicity": compact_text(row.ethnicity),
+                "birthCountry": compact_text(row.birth_country),
+                "birthRegion": birth_region(row.birth_country, birth_region_by_country),
+                "felon": compact_text(row.felon),
             }
         )
         facility_codes.update(row.route)
@@ -239,7 +276,7 @@ def build_payload(source_path: Path, facility_source_path: Path, years: list[int
             "maxStartDate": max((stay["startDate"] for stay in stays if stay["startDate"]), default=None),
             "yearCounts": {str(year): int(year_counts[year]) for year in sorted(year_counts)},
         },
-        "nodes": build_nodes(facility_codes, country_codes, facility_nodes),
+        "nodes": build_nodes(facility_codes, country_codes, facility_nodes, country_nodes),
         "stays": stays,
     }
 
@@ -258,6 +295,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build TUCHOLD movement map data for 2025-2026.")
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE, help="Path to the parquet file.")
     parser.add_argument("--facility-source", type=Path, default=DEFAULT_FACILITY_SOURCE, help="Path to the facility lookup parquet.")
+    parser.add_argument("--reference-source", type=Path, default=DEFAULT_REFERENCE_SOURCE, help="Path to the JSON reference lookups.")
     parser.add_argument("--output-json", type=Path, default=DEFAULT_OUTPUT_JSON, help="Where to write the JSON payload.")
     parser.add_argument("--output-js", type=Path, default=DEFAULT_OUTPUT_JS, help="Where to write the browser-ready JS payload.")
     parser.add_argument("--years", type=int, nargs="+", default=DEFAULT_YEARS, help="Calendar years to include.")
@@ -270,6 +308,7 @@ def main() -> None:
     payload = build_payload(
         source_path=args.source,
         facility_source_path=args.facility_source,
+        reference_source_path=args.reference_source,
         years=sorted(set(args.years)),
         first_facility_code=args.first_facility_code.upper(),
     )

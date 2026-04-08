@@ -97,7 +97,8 @@ input {
 .metric-grid,
 .mini-grid,
 .connection-list,
-.detail-sections {
+.detail-sections,
+.filter-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -151,6 +152,50 @@ input {
   border: 1px solid var(--line);
   background: var(--card);
   padding: 0.65rem 0.75rem;
+}
+
+.filter-suggestions {
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.filter-suggestions:empty {
+  display: none;
+}
+
+.suggestion-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.suggestion {
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 0.35rem 0.55rem;
+  color: inherit;
+  cursor: pointer;
+}
+
+.filter-pills:empty {
+  display: none;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 0.4rem 0.55rem;
+  white-space: nowrap;
+}
+
+.filter-pill button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
 }
 
 .panel-header,

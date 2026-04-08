@@ -13,7 +13,7 @@ The Deportation Data Project publishes processed ICE datasets and interactive to
 
 ## Dataset Background
 
-The included map is built from a detention stays parquet export. In this repo, a "stay" is one row with:
+The included map is built from a detention stays parquet export, a separate `facility_coordinates.parquet` lookup for facility locations, and a small `reference_lookups.json` file for country coordinates and birth-region groupings. In this repo, a "stay" is one row with:
 
 - a stay identifier
 - a start timestamp
