@@ -850,7 +850,7 @@
   function renderOverview(summary) {
     setDetail(
       "Overview",
-      metricCards(summary, { label: "stays", value: fmt(summary.stats.stays) }, { label: "exits", value: fmt(summary.stats.countryExits) }),
+      metricCards(summary, { label: "detentions", value: fmt(summary.stats.stays) }, { label: "exits", value: fmt(summary.stats.countryExits) }),
       sectionBlocks(summary.sections)
     );
   }
@@ -864,7 +864,7 @@
 
     setDetail(
       node.label,
-      metricCards(node.summary, { label: "stays", value: fmt(node.summary.stats.stays) }, { label: "moves", value: fmt(node.moveCount) }),
+      metricCards(node.summary, { label: "detentions", value: fmt(node.summary.stats.stays) }, { label: "moves", value: fmt(node.moveCount) }),
       sectionBlocks(sections)
     );
   }
@@ -872,7 +872,7 @@
   function renderCorridor(corridor, graph) {
     setDetail(
       corridor.label,
-      metricCards(corridor.summary, { label: "moves", value: fmt(corridor.total) }, { label: "stays", value: fmt(corridor.summary.stats.stays) }),
+      metricCards(corridor.summary, { label: "moves", value: fmt(corridor.total) }, { label: "detentions", value: fmt(corridor.summary.stats.stays) }),
       corridorRoutes(corridor, graph)
         .map((route) => {
           const open = app.open.has(route.key);
@@ -888,7 +888,7 @@
                       <div class="mini-grid">${metricCards(
                         route.summary,
                         { label: "moves", value: fmt(route.total) },
-                        { label: "stays", value: fmt(route.summary.stats.stays) }
+                        { label: "detentions", value: fmt(route.summary.stats.stays) }
                       )}</div>
                       ${sectionBlocks(route.summary.sections)}
                     </div>`
@@ -904,7 +904,7 @@
   function renderYears(stays) {
     dom.years.innerHTML = Object.entries(yearCounts(stays))
       .map(([year, count]) => `<span class="chip">${year}: ${fmt(count)}</span>`)
-      .concat(`<span class="chip">Total: ${fmt(stays.length)}</span>`)
+      .concat(`<span class="chip">Detentions: ${fmt(stays.length)}</span>`)
       .join("");
   }
 
