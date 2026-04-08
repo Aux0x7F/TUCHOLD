@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local data and exports
+*.parquet
+*.csv
+*.xlsx
+*.xls
+
+# Logs / temp files
+*.log
+server.out
+server.err
+
+# Local screenshots and scratch assets
+web/shot_*.png

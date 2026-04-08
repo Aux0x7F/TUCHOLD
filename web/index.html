@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TUCHOLD Movement Map</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    >
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <main class="map-shell">
+        <div id="map"></div>
+      </main>
+
+      <aside class="rail">
+        <h1>TUCHOLD</h1>
+
+        <div id="year-summary" class="year-summary"></div>
+
+        <section class="panel filter-panel">
+          <div class="filter-grid">
+            <label class="field">
+              <span>Start</span>
+              <input id="filter-start" type="date">
+            </label>
+            <label class="field">
+              <span>End</span>
+              <input id="filter-end" type="date">
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2 id="detail-title">Overview</h2>
+            <button id="reset-selection" type="button">Reset</button>
+          </div>
+          <div id="detail-metrics" class="metric-grid"></div>
+          <div id="detail-sections" class="detail-sections"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Top connections</h2>
+            <span id="connection-caption" class="subtle"></span>
+          </div>
+          <div id="connection-list" class="connection-list"></div>
+        </section>
+      </aside>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./data/tuchold_flow_data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
