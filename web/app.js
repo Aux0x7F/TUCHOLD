@@ -4,12 +4,12 @@
   const rawFacilities = raw.nodes.filter((node) => node.kind === "facility");
   const stayById = Object.fromEntries(raw.stays.map((stay) => [stay.id, stay]));
   const stateNames = { AZ: "Arizona", CA: "California", CU: "Cuba", FL: "Florida", LA: "Louisiana", MS: "Mississippi", NM: "New Mexico", TX: "Texas", WA: "Washington" };
+  const pinnedNodeIds = new Set(["TUCHOLD"]);
   const cityNameCounts = rawFacilities.reduce((counts, node) => ((counts[node.city] = (counts[node.city] || 0) + 1), counts), {});
   const defaultFilter = {
     start: raw.metadata.minStartDate || "",
     end: raw.metadata.maxStartDate || "",
   };
-  const facilityPlots = plotFacilities(rawFacilities);
   const groupedNodes = { state: buildNodes("state"), city: buildNodes("city"), facility: buildNodes("facility") };
   const baseGraphs = {};
   const homeBounds = L.latLngBounds(rawFacilities.map((node) => [node.lat, node.lon]));
@@ -21,6 +21,7 @@
     open: new Set(),
     frame: 0,
     pendingFull: false,
+    interacting: false,
     startDate: defaultFilter.start,
     endDate: defaultFilter.end,
     filterKey: "",
@@ -173,31 +174,6 @@
     return cityNameCounts[city] > 1 ? `${city}, ${state}` : city;
   }
 
-  function plotFacilities(items) {
-    const groups = new Map();
-    const plots = {};
-    items.forEach((node) => {
-      const key = cityKey(node.state, node.city);
-      if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(node);
-    });
-    groups.forEach((group) => {
-      const sorted = [...group].sort((a, b) => a.label.localeCompare(b.label));
-      if (sorted.length === 1) {
-        plots[sorted[0].id] = { lat: sorted[0].lat, lon: sorted[0].lon };
-        return;
-      }
-      const radius = 0.035 + sorted.length * 0.01;
-      sorted.forEach((node, index) => {
-        const angle = (-Math.PI / 2) + ((Math.PI * 2) / sorted.length) * index;
-        const latOffset = Math.sin(angle) * radius;
-        const lonOffset = (Math.cos(angle) * radius) / Math.max(0.35, Math.cos((node.lat * Math.PI) / 180));
-        plots[node.id] = { lat: Number((node.lat + latOffset).toFixed(4)), lon: Number((node.lon + lonOffset).toFixed(4)) };
-      });
-    });
-    return plots;
-  }
-
   function groupId(node, level) {
     if (node.kind === "country") return node.id;
     if (level === "facility") return node.id;
@@ -216,7 +192,7 @@
     const grouped = new Map();
     raw.nodes.forEach((node) => {
       const key = groupId(node, level);
-      const point = node.kind === "facility" && level === "facility" ? facilityPlots[node.id] : { lat: node.lat, lon: node.lon };
+      const point = { lat: node.lat, lon: node.lon };
       if (!grouped.has(key)) {
         grouped.set(key, {
           id: key,
@@ -391,6 +367,7 @@
 
   function mergeNearby(groups, keyFn, baseNodes) {
     const parent = Object.fromEntries(groups.map((group) => [group.id, group.id]));
+    const isPinned = (group) => group.members.some((id) => pinnedNodeIds.has(id));
     const find = (id) => {
       if (parent[id] !== id) parent[id] = find(parent[id]);
       return parent[id];
@@ -413,6 +390,7 @@
     buckets.forEach((items) => {
       for (let index = 0; index < items.length; index += 1) {
         for (let next = index + 1; next < items.length; next += 1) {
+          if (isPinned(items[index]) || isPinned(items[next])) continue;
           if (pointDistance(items[index], items[next]) <= threshold) join(items[index].id, items[next].id);
         }
       }
@@ -906,12 +884,19 @@
 
   function scheduleRender(full = false) {
     if (full) app.pendingFull = true;
+    if (app.interacting) return;
     if (app.frame) return;
     app.frame = window.requestAnimationFrame(() => {
       app.frame = 0;
       render(app.pendingFull);
       app.pendingFull = false;
     });
+  }
+
+  function cancelScheduledRender() {
+    if (!app.frame) return;
+    window.cancelAnimationFrame(app.frame);
+    app.frame = 0;
   }
 
   function applyFilter(start, end) {
@@ -939,8 +924,15 @@
   els.filterStart.addEventListener("change", () => applyFilter(els.filterStart.value, els.filterEnd.value));
   els.filterEnd.addEventListener("change", () => applyFilter(els.filterStart.value, els.filterEnd.value));
 
-  map.on("zoom move resize", () => scheduleRender(false));
-  map.on("zoomend moveend", () => scheduleRender(true));
+  map.on("zoomstart movestart", () => {
+    app.interacting = true;
+    cancelScheduledRender();
+  });
+  map.on("zoomend moveend", () => {
+    app.interacting = false;
+    scheduleRender(true);
+  });
+  map.on("resize", () => scheduleRender(true));
   if (homeBounds.isValid()) map.fitBounds(homeBounds, { padding: [60, 60], maxZoom: 6 });
   render(true);
 })();

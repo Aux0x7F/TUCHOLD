@@ -20,6 +20,7 @@ Thumbs.db
 *.csv
 *.xlsx
 *.xls
+!data/facility_coordinates.parquet
 
 # Logs / temp files
 *.log

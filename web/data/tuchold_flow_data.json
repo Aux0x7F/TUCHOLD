@@ -21,8 +21,11 @@
       "name": "Adams County Correctional Center",
       "city": "Natchez",
       "state": "MS",
-      "lat": 31.5604,
-      "lon": -91.4032
+      "lat": 31.5576334,
+      "lon": -91.2211771,
+      "address": "20 Hobo Fork Rd, Natchez, MS 39120",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "ADLNTCA",
@@ -31,8 +34,11 @@
       "name": "Adelanto ICE Processing Center",
       "city": "Adelanto",
       "state": "CA",
-      "lat": 34.5828,
-      "lon": -117.409
+      "lat": 34.5599467,
+      "lon": -117.4421505,
+      "address": "10250 Rancho Rd, Adelanto, CA 92301",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "BASILLA",
@@ -41,18 +47,24 @@
       "name": "South Louisiana ICE Processing Center",
       "city": "Basile",
       "state": "LA",
-      "lat": 30.4852,
-      "lon": -92.5959
+      "lat": 30.4875023,
+      "lon": -92.5831512,
+      "address": "3843 Stagg Ave, Basile, LA 70515",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "BKLHOLD",
       "kind": "facility",
       "label": "Bakersfield",
-      "name": "Bakerfield Hold",
+      "name": "Bakersfield Hold",
       "city": "Bakersfield",
       "state": "CA",
-      "lat": 35.3733,
-      "lon": -119.0187
+      "lat": 35.373391,
+      "lon": -119.010786,
+      "address": "800 Truxtun Ave, Bakersfield, CA 93301",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "CACTYCA",
@@ -61,8 +73,11 @@
       "name": "California City Corrections Center",
       "city": "California City",
       "state": "CA",
-      "lat": 35.1258,
-      "lon": -117.9859
+      "lat": 35.1531066,
+      "lon": -117.8591019,
+      "address": "22844 Virginia Blvd, California City, CA 93505",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "CBENDTX",
@@ -71,8 +86,11 @@
       "name": "Coastal Bend Detention Facility",
       "city": "Robstown",
       "state": "TX",
-      "lat": 27.7903,
-      "lon": -97.6689
+      "lat": 27.7356927,
+      "lon": -97.7543028,
+      "address": "4909 Farm to Market Rd 2826, Robstown, TX 78380",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "CCAFLAZ",
@@ -81,8 +99,11 @@
       "name": "CCA, Florence Correctional Center",
       "city": "Florence",
       "state": "AZ",
-      "lat": 33.0315,
-      "lon": -111.3873
+      "lat": 33.0438338,
+      "lon": -111.371793,
+      "address": "1100 Bowling Rd, Florence, AZ 85132",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "CIBOCNM",
@@ -91,8 +112,11 @@
       "name": "Cibola County Correctional Center",
       "city": "Milan",
       "state": "NM",
-      "lat": 35.1673,
-      "lon": -107.9015
+      "lat": 35.179948,
+      "lon": -107.9073231,
+      "address": "2000 Cibola Loop, Milan, NM 87021",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "CSCNWWA",
@@ -101,8 +125,11 @@
       "name": "NW ICE Processing Center",
       "city": "Tacoma",
       "state": "WA",
-      "lat": 47.2396,
-      "lon": -122.4437
+      "lat": 47.2494122,
+      "lon": -122.4211421,
+      "address": "1623 E J St, Tacoma, WA 98421",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "EAZ",
@@ -111,8 +138,11 @@
       "name": "Eloy Fed Ctr Facility (CoreCivic)",
       "city": "Eloy",
       "state": "AZ",
-      "lat": 32.7559,
-      "lon": -111.5558
+      "lat": 32.8176772,
+      "lon": -111.51927,
+      "address": "1705 E Hanna Rd, Eloy, AZ 85131",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "ELVDFTX",
@@ -121,8 +151,11 @@
       "name": "El Valle Detention Facility",
       "city": "Raymondville",
       "state": "TX",
-      "lat": 26.4815,
-      "lon": -97.7831
+      "lat": 26.4711571,
+      "lon": -97.7584848,
+      "address": "1800 Industrial Dr, Raymondville, TX 78580",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "EPSSFTX",
@@ -131,8 +164,11 @@
       "name": "El Paso Soft Sided Facility",
       "city": "El Paso",
       "state": "TX",
-      "lat": 31.7619,
-      "lon": -106.485
+      "lat": 31.9724598,
+      "lon": -106.3679552,
+      "address": "12501 Gateway South Blvd, El Paso, TX 79934",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "EROFCB",
@@ -142,7 +178,10 @@
       "city": "El Paso",
       "state": "TX",
       "lat": 31.8118,
-      "lon": -106.3753
+      "lon": -106.3753,
+      "address": null,
+      "coordinateQuality": "approximate_site",
+      "note": "Camp East Montana still uses a conservative El Paso camp-level point pending a clean facility geocode."
     },
     {
       "id": "FLO",
@@ -151,8 +190,11 @@
       "name": "Florence SPC",
       "city": "Florence",
       "state": "AZ",
-      "lat": 33.0315,
-      "lon": -111.3873
+      "lat": 33.0650009,
+      "lon": -111.3784928,
+      "address": "3250 N Pinal Pkwy, Florence, AZ 85132",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "FREHOLD",
@@ -161,8 +203,11 @@
       "name": "Fresno Holdroom",
       "city": "Fresno",
       "state": "CA",
-      "lat": 36.7378,
-      "lon": -119.7871
+      "lat": 36.7328202,
+      "lon": -119.7855754,
+      "address": "733 L St, Fresno, CA 93721",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "FSF",
@@ -171,8 +216,11 @@
       "name": "Florence Staging Facility",
       "city": "Florence",
       "state": "AZ",
-      "lat": 33.0315,
-      "lon": -111.3873
+      "lat": 33.0650009,
+      "lon": -111.3784928,
+      "address": "3250 N Pinal Pkwy, Florence, AZ 85132",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "GLDSACA",
@@ -181,8 +229,11 @@
       "name": "Golden State Annex",
       "city": "McFarland",
       "state": "CA",
-      "lat": 35.678,
-      "lon": -119.2293
+      "lat": 35.6698182,
+      "lon": -119.2275672,
+      "address": "611 Frontage Rd, McFarland, CA 93250",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "GTMOACU",
@@ -192,7 +243,10 @@
       "city": "Guantanamo Bay",
       "state": "CU",
       "lat": 19.906,
-      "lon": -75.1633
+      "lon": -75.1633,
+      "address": null,
+      "coordinateQuality": "approximate_site",
+      "note": "Windward Holding still uses a conservative Guantanamo Bay camp-level point pending a facility-specific coordinate."
     },
     {
       "id": "HLGHOLD",
@@ -201,8 +255,11 @@
       "name": "Harlingen Hold Room",
       "city": "Harlingen",
       "state": "TX",
-      "lat": 26.1906,
-      "lon": -97.6961
+      "lat": 26.178023,
+      "lon": -97.7141244,
+      "address": "1717 Zoy St, Harlingen, TX 78550",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "IRADFCA",
@@ -211,18 +268,24 @@
       "name": "Imperial Regional Adult Detention Facility",
       "city": "Calexico",
       "state": "CA",
-      "lat": 32.6789,
-      "lon": -115.4989
+      "lat": 32.6904134,
+      "lon": -115.3872487,
+      "address": "1564 Gateway Rd, Calexico, CA 92231",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "IWAHOLD",
       "kind": "facility",
       "label": "AROCC",
       "name": "AZ Rem Op Coord Center (AROCC)",
-      "city": "Phoenix",
+      "city": "Mesa",
       "state": "AZ",
-      "lat": 33.4484,
-      "lon": -112.074
+      "lat": 33.3033944,
+      "lon": -111.6627399,
+      "address": "6335 S Downwind Blvd, Suite 104, Mesa, AZ 85212",
+      "coordinateQuality": "secondary_address",
+      "note": "Mesa point based on audited secondary-source address rather than an ICE facility page."
     },
     {
       "id": "JENADLA",
@@ -231,8 +294,11 @@
       "name": "Central Louisiana ICE Processing Center",
       "city": "Jena",
       "state": "LA",
-      "lat": 31.6838,
-      "lon": -92.125
+      "lat": 31.7088575,
+      "lon": -92.1529335,
+      "address": "830 Pinehill Rd, Jena, LA 71342",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "JENATLA",
@@ -241,8 +307,11 @@
       "name": "Alexandria Staging Facility",
       "city": "Alexandria",
       "state": "LA",
-      "lat": 31.3113,
-      "lon": -92.4451
+      "lat": 31.3175456,
+      "lon": -92.5361519,
+      "address": "96 George Thompson Dr, Alexandria, LA 71303",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "KRO",
@@ -251,8 +320,11 @@
       "name": "Krome North SPC",
       "city": "Miami",
       "state": "FL",
-      "lat": 25.5606,
-      "lon": -80.4984
+      "lat": 25.7546881,
+      "lon": -80.4896527,
+      "address": "18201 SW 12th St, Miami, FL 33194",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "LAWINCI",
@@ -261,8 +333,11 @@
       "name": "Winn Correctional Center",
       "city": "Winnfield",
       "state": "LA",
-      "lat": 31.9257,
-      "lon": -92.6413
+      "lat": 31.8502693,
+      "lon": -92.7792943,
+      "address": "560 Gum Springs Rd, Winnfield, LA 71483",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "LRDICDF",
@@ -271,8 +346,11 @@
       "name": "Laredo Processing Center",
       "city": "Laredo",
       "state": "TX",
-      "lat": 27.5306,
-      "lon": -99.4803
+      "lat": 27.5294764,
+      "lon": -99.4477731,
+      "address": "4702 E Saunders St, Laredo, TX 78041",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "PHOHOLD",
@@ -281,18 +359,24 @@
       "name": "Phoenix Dist Office",
       "city": "Phoenix",
       "state": "AZ",
-      "lat": 33.4484,
-      "lon": -112.074
+      "lat": 33.4707941,
+      "lon": -112.0730845,
+      "address": "2035 N Central Ave, Phoenix, AZ 85004",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "PIC",
       "kind": "facility",
       "label": "Port Isabel",
       "name": "Port Isabel SPC",
-      "city": "Port Isabel",
+      "city": "Los Fresnos",
       "state": "TX",
-      "lat": 26.0734,
-      "lon": -97.2086
+      "lat": 26.1563622,
+      "lon": -97.337839,
+      "address": "27991 Buena Vista Blvd, Los Fresnos, TX 78566",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "PINEPLA",
@@ -301,18 +385,24 @@
       "name": "Pine Prairie ICE Processing Center",
       "city": "Pine Prairie",
       "state": "LA",
-      "lat": 30.7849,
-      "lon": -92.4254
+      "lat": 30.7890963,
+      "lon": -92.4225038,
+      "address": "1133 Hampton Dupre Rd, Pine Prairie, LA 70576",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "RWCCMLA",
       "kind": "facility",
       "label": "Richwood",
       "name": "Richwood Cor Center",
-      "city": "Richwood",
+      "city": "Monroe",
       "state": "LA",
-      "lat": 32.4521,
-      "lon": -91.8893
+      "lat": 32.4566303,
+      "lon": -92.0788188,
+      "address": "180 Pine Bayou Cir, Monroe, LA 71202",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "STCDFTX",
@@ -321,8 +411,11 @@
       "name": "South Texas ICE Processing Center",
       "city": "Pearsall",
       "state": "TX",
-      "lat": 28.8925,
-      "lon": -99.0959
+      "lat": 28.894612,
+      "lon": -99.1219,
+      "address": "566 Veterans Dr, Pearsall, TX 78061",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "STFRCTX",
@@ -331,8 +424,11 @@
       "name": "South Texas Family Residential Center",
       "city": "Dilley",
       "state": "TX",
-      "lat": 28.6678,
-      "lon": -99.1559
+      "lat": 28.6584541,
+      "lon": -99.2008784,
+      "address": "300 El Rancho Way, Dilley, TX 78017",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "TOORANM",
@@ -341,8 +437,11 @@
       "name": "Torrance/Estancia, NM",
       "city": "Estancia",
       "state": "NM",
-      "lat": 34.7584,
-      "lon": -106.0558
+      "lat": 34.762089,
+      "lon": -106.017893,
+      "address": "209 County Road A049, Estancia, NM 87016",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "TUCHOLD",
@@ -351,18 +450,24 @@
       "name": "Tucson INS Hold Room",
       "city": "Tucson",
       "state": "AZ",
-      "lat": 32.2226,
-      "lon": -110.9747
+      "lat": 32.1356722,
+      "lon": -110.9247976,
+      "address": "6431 S Country Club Rd, Tucson, AZ 85706",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "URSLATX",
       "kind": "facility",
       "label": "Ursula",
       "name": "Ursula Centralized Processing Center",
-      "city": "Ursula",
+      "city": "McAllen",
       "state": "TX",
-      "lat": 26.3176,
-      "lon": -97.7192
+      "lat": 26.1590584,
+      "lon": -98.2702036,
+      "address": "3700 W Ursula Ave, McAllen, TX 78503",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "WEBDCTX",
@@ -371,8 +476,11 @@
       "name": "Webb County Detention Center (CCA)",
       "city": "Laredo",
       "state": "TX",
-      "lat": 27.5306,
-      "lon": -99.4803
+      "lat": 27.377731,
+      "lon": -99.471644,
+      "address": "9998 S Highway 83, Laredo, TX 78046",
+      "coordinateQuality": "address",
+      "note": null
     },
     {
       "id": "COUNTRY:AUSTRALIA",
