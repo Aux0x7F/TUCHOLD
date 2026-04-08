@@ -28,3 +28,4 @@ server.err
 
 # Local screenshots and scratch assets
 web/shot_*.png
+web/debug_*.png
